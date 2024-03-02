@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root, .columns{
+            max-width: 1400px;
+            margin: auto;
+        }
+        body > p{
+            max-width: 1400px;
+            margin: 20px auto;
+        }
+
+        .columns{
+            background-color: #eee;
+        }
+        .item{
+            display: flex;
+        }
+        .item > div{
+            border: 1px solid black;
+            flex: 1;
+            padding: 5px 10px;
+        }
+        .item > div:nth-child(1){
+            flex: 4;
+        }
+        .item.blue{
+            background-color: lightskyblue;
+        } 
+        .itme.red{
+            background-color: lightpink;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>JSON파일 내용 불러와서 화면에 정렬 출력하기</h1>
+    <hr>
+
+    <p id="sort">
+        <button id="kill">킬 오름차순</button>
+        <button id="death">데스 오름차순</button>
+        <button id="assist">어시스트 오름차순</button>
+        <button id="damage">데미지 오름차순</button>
+        <button id="cs">cs 오름차순</button>
+    </p>
+    
+    <div class="columns item">
+        <div>유저</div>
+        <div>챔피언</div>
+        <div>팀</div>
+        <div>킬</div>
+        <div>데스</div>
+        <div>어시스트</div>
+        <div>데미지</div>
+        <div>cs</div>
+    </div>
+    <div id="root"></div>
+
+    <script src="opgg_result.js"></script>
+    <script>
+        const root = document.getElementById('root')
+        let cnt = 1
+        function sort(event){
+            const id = event.target.id 
+            const column = id.split('-')[0]       
+            
+            const arr2 = Array.from(document.querySelectorAll('#root > .item'))
+            arr2.sort((e1, e2) => {
+                const v1 = +e1.querySelector('.' + column).innerText
+                const v2 = +e2.querySelector('.' + column).innerText
+                return (v1 - v2 > 0 ? 1 : -1) * cnt
+            })
+            cnt *= -1
+            arr2.forEach(e => root.appendChild(e))
+        }
+        
+        const btnList = document.querySelectorAll('#sort > button')
+        btnList.forEach(btn => btn.onclick = sort)
+        
+        function load(){
+            arr.forEach(dto =>{
+                let tag = ''
+                tag += `<div class="item" style="background-color: ${dto.team == '블루' ? 'lightskyblue' : 'lightpink'};">`
+                tag += `    <div class="user">${dto.user}</div>`
+                tag += `    <div class="champion">${dto.champion}</div>`
+                tag += `    <div class="team">${dto.team}</div>`
+                tag += `    <div class="kill">${dto.kill}</div>`
+                tag += `    <div class="death">${dto.death}</div>`
+                tag += `    <div class="assist">${dto.assist}</div>`
+                tag += `    <div class="damage">${dto.damage}</div>`
+                tag += `    <div class="cs">${dto.cs}</div>`
+                tag += '</div>'
+                root.innerHTML += tag
+            })
+        }
+
+
+        window.addEventListener('DOMContentLoaded', load)
+
+    </script>
+
+
+</body>
+</html>

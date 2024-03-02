@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2_control.html</title>
+</head>
+<body>
+    
+    <script>
+        // 제어문 : if, switch ~ case, while, for
+        //          break, continue, return
+
+        let cnt = 0
+        while(1) {      // 숫자를 조건으로 사용할 수 있다 (c)
+                        // boolean 타입의 값을 이용할 수도 있다
+                        // 1은 true, 0은 false, 0이 아닌 모든 값은 참으로 간주
+            console.log(cnt++)
+            if(cnt == 100){
+                break
+            }
+        }
+
+        for(let i = 0; i < 5; i++){ // int 아니고 let으로 변수 선언
+            console.log(i + 1) * 10
+        }
+
+        const arr = [10, 20, 30, 40, 50]
+
+        for(let index in arr){  // index 혹은 객체 필드의 name에 접근하려면 in
+            console.log(index, arr[index])
+        }
+
+        for(let value of arr){
+            console.log(value)
+        }
+
+        arr.forEach((element, index) => console.log(index, element))
+
+        while(arr.length){          // 정수를 조건으로 사용(배열의 길이)
+            console.log(arr)        // 현재 배열상태 확인
+            const num = arr.pop()   // 배열의 마지막 원소를 하나 꺼낸다 (길이 감소)
+            console.log(num)        // 꺼낸 값 확인
+        }
+        console.log('글')
+        
+    </script>
+
+</body>
+</html>

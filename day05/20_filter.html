@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>20_filter.html</h1>
+    <hr>
+    <form id="searchForm">
+        <p><input id="search" type="search" autocomplete="off" autofocus></p>
+        <p><input type="submit" value="검색"></p>
+    </form>
+
+    <ul>
+        <li>왕제은</li>
+        <li>한동근</li>
+        <li>배진호</li>
+        <li>최현웅</li>
+        <li>정승호</li>
+        <li>황상기</li>
+        <li>김유빈</li>
+        <li>유형주</li>
+        <li>황민정</li>
+    </ul>
+
+    <script>
+        const searchForm = document.getElementById('searchForm')
+        const ul = document.querySelector('ul')
+
+        // input에 대한 key이벤트를 사용하지 않고
+        // submit에 대한 click이벤트를 사용하지 않고
+        // form에 대한 submit이벤트를 사용한다
+        // form이 submit되면 새로운 요청이 발생하고, 이후의 자바스크립트는 무시된다
+
+        searchForm.onsubmit = function(event){
+            // form에 대한 submit 이벤트는 첫줄에 반드시 기본작동을 막아야한다
+            event.preventDefault()
+
+            // 검색어를 가져온다
+            const searchValue = event.target.querySelector('input').value
+            console.log(searchValue)
+
+            // 문서에 잇는 대상 엘리먼트를 배열형태로 불러온다
+            const arr = Array.from(document.querySelectorAll('ul > li'))
+            arr.forEach(e => e.classList.remove('hidden'))
+
+            // 검색어를 포함하지 않는 배열을 별도로 불러와서 모두 hidden 처리한다
+            // arr.fliter는 새로운 배열을 반환한다
+            // arr.filter의 콜백함수는 boolean 타입을 반환하면 된다
+            // (조건을 만족하는 내용만 남기고 모두 제거한다)
+            const arr2 = arr.filter(e => e.innerText.includes(searchValue) == false)
+            arr2.forEach(e => e.classList.add('hidden'))
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16_sort.html</title>
+</head>
+<body>
+
+    <div>
+        <button id="sortAsc">오름차순 정렬</button>
+    </div>
+
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <td>메뉴</td>
+                <td>가격</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>맥크리스피 디럭스 버거 세트</td>
+                <td>9200</td>
+            </tr>
+            <tr>
+                <td>트러플 치즈버거 세트</td>
+                <td>8500</td>
+            </tr>
+            <tr>
+                <td>슈비버거 세트</td>
+                <td>9100</td>
+            </tr>
+            <tr>
+                <td>슈슈버거 세트</td>
+                <td>7300</td>
+            </tr>
+            <tr>
+                <td>맥스파이시 상하이버거 세트</td>
+                <td>8200</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // tbody 안에 있는 tr을 불러와서
+        // tr 내부의 두번째 td의 내투벡스트를 정수형태로 비교하여 정렬을 수행한다
+        // 정렬이 끝난 tr을 다시 tbody에 appendChild 해서 자리를 변경한다
+        
+        const sortAsc = document.getElementById('sortAsc')
+        const tbody = document.querySelector('tbody')
+
+        sortAsc.onclick = function(){
+            const trList = document.querySelectorAll('tbody > tr')
+            const trArray = Array.from(trList)
+
+            const resultArray = trArray.toSorted((a, b) => {
+                return +a.querySelector('td:nth-child(2)').innerText - +b.querySelector('td:nth-child(2)').innerText
+            })
+            
+            resultArray.forEach(e => tbody.appendChild(e) );
+        }
+        
+    </script>
+    
+</body>
+</html>

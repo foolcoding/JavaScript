@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root{
+            max-width: 1300px;
+            margin: 20px auto;
+        }
+        .left{
+            width: 800px;
+            display: flex;
+        }
+        .left > label{
+            flex: 1;
+        }
+        .right{
+            display: flex;
+            flex-flow: wrap;
+        }
+        .item{
+            border: 2px solid black;
+            margin: 10px;
+            padding: 10px;
+            width: 210px;
+            transition-duration: 0.2s;
+            border-radius: 50px 600px 80px 70px / 70px 50px 50px 10px;
+        }
+        .item:hover{
+            transform: scale(1.06);
+            background-color: #eee;
+            cursor: pointer;
+        }
+        .item > div{
+            flex: 1;
+        }
+        .item > div:nth-child(2){
+            flex: 3;
+        }
+        .item > div:nth-child(n){
+            border-bottom: 1px solid grey;
+        }
+        .hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>JSON파일 내용 불러와서 화면에 정렬 출력하기</h1>
+    <hr>
+
+    <div id="root">
+        <div class="left">
+            <label><input type="checkbox" name="p0">10000원 미만</label>
+            <label><input type="checkbox" name="p1">10000원 대</label>
+            <label><input type="checkbox" name="p2">20000원 대</label>
+            <label><input type="checkbox" name="p3">30000원 대</label>
+            <label><input type="checkbox" name="p4">40000원 대</label>
+            <label><input type="checkbox" name="p5">50000원 대</label>
+        </div>
+        <div class="right"></div>
+    </div>
+
+    <script src="homeplus(berry).js"></script>
+    <script>
+        const root = document.querySelector('div.right')
+
+        const boxList = document.querySelectorAll('div.left > label > input[type="checkbox"]')
+        
+        function filterHandler(event){
+            const checked = Array.from(boxList).filter(e => e.checked)
+                                        .map(e => +e.name.replace('p', ''))
+            const item = Array.from(document.querySelectorAll('.item'))
+
+            item.forEach(e => {
+                const filt = Math.floor(+e.children[1].innerText / 10000)
+                if(checked.includes(filt)){
+                    e.classList.remove('hidden')
+                }
+                else{
+                    e.classList.add('hidden')
+                }
+                if(checked.length == 0){
+                   e.classList.remove('hidden')
+                }
+            })
+        }
+        
+        function load(){
+            arr.forEach(dto =>{
+                let tag = ''
+                tag += '<div class="item">'
+                tag += `    <div class="name">${dto.name}</div>`
+                tag += `    <div class="price">${dto.price}</div>`
+                tag += `    <div class="grade">${dto.grade}</div>`
+                tag += '</div>'
+                root.innerHTML += tag
+            })
+        }
+
+        window.addEventListener('DOMContentLoaded', load)
+
+        boxList.forEach(e => e.onclick = filterHandler)
+
+    </script>
+
+</body>
+</html>

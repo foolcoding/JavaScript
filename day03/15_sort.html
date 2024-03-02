@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15_sort.html</title>
+</head>
+<body>
+    
+    <ul>
+        <li>유빈</li>
+        <li>민정</li>
+        <li>진호</li>
+        <li>재영</li>
+        <li>민서</li>
+        <li>형주</li>
+    </ul>
+    <div>
+        <button id="sortAsc">오름차순 정렬</button>
+    </div>
+
+    <script>
+        // 이벤트가 발생할 버튼을 불러온다
+        const sortAsc = document.getElementById('sortAsc')
+
+        // 정렬대상을 불러온다
+        const ul = document.querySelector('ul')
+        
+        // 버튼을 클릭했을 때 실행할 함수를 작성한다
+        sortAsc.onclick = function(){
+            // CSS선택자를 이용하여 해당하는 모든 요소를 NodeList 형태로 불러온다
+            const liList = document.querySelectorAll('ul > li')
+
+            // NodeList타입에는 sort가 없다. 따라서 배열로 전환한다
+            const liArray = Array.from(liList)
+
+            // 정렬을 수행할 대상들은 <li> 이고, 그 기준은 <li>의 내부 텍스트이다
+            const resultArray = liArray.toSorted((a, b) => {
+                return a.innerText > b.innerText ? 1 : -1
+            })
+
+            // 정렬을 수행했지만 스크립트 내부에서만 적용된다
+            console.log(resultArray)
+
+            // 문서에 반영하기 위해 appendChild를 수행한다
+            // 기존에 있는 요소이므로, 추가하지 않고 자리만 바꾼다
+            resultArray.forEach(e => ul.appendChild(e))
+        }
+
+    </script>
+</body>
+</html>

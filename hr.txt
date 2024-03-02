@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27_modal_aside.html</title>
+    <style>
+        .aside {
+            position: relative;
+            position: fixed;
+            transition-duration: 0.5s;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .overlay {
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transition-duration: 0.5s;
+        }
+
+        .menu {
+            position: absolute;
+            background-color: white;
+            width: 250px;
+            height: 100%;
+            padding-left: 10px;
+            top: 0;
+            left: 0;
+            transition-duration: 0.5s;
+            z-index: 4;
+        }
+
+        .aside.hidden > .menu {
+            left: -300px;
+            transition-duration: 0.5s;
+        }
+
+        .aside.hidden + .overlay {
+            background-color: rgba(0, 0, 0, 0);
+            transition-duration: 0.5s;
+            z-index: -100;
+        }
+
+        .none{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>27_modal_aside.html</h1>
+    <hr>
+    <h3>버튼을 클릭하면 왼쪽에 숨겨져 있던 메뉴 창이 움직이면서 나타난다</h3>
+    <button id="open" aria-required="true">메뉴</button>
+
+    <div class="aside hidden">
+        <div class="menu">
+            <h2>메뉴</h2>
+                <ol>
+                <li>C언어</li>
+                <li>자료구조</li>
+                <li>Python</li>
+                <li>Java</li>
+                <li>JSP</li>
+                <li>Spring</li>
+                <li>Spring Boot</li>
+                <li>Database</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>Jajascript</li>
+            </ol>
+            <br>
+            <button id="close">닫기</button>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    
+    <script>
+        const aside = document.querySelector('.aside')
+        const menu = document.querySelector('.menu')
+        const openBtn = document.getElementById('open')
+        const closeBtn = document.getElementById('close')
+
+        const openAction = function(event) {
+            aside.classList.remove('hidden')
+            return console.log(aside)
+        }
+        openBtn.onclick = openAction
+        
+        const closeAction = function(event) {
+            aside.classList.add('hidden')
+            return console.log(aside)
+        }
+        closeBtn.onclick = closeAction
+    </script>
+    
+</body>
+</html>

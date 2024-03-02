@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        #root {
+            border: 2px solid black;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .item {
+            display: flex;
+            border-bottom: 1px solid grey;
+        }
+        .item > div {
+            padding: 10px 20px;
+            flex: 2;
+        }
+        .item > div:first-child {
+            flex: 4;
+        }
+        .item > div:nth-child(2) {
+            flex: 3;
+        }
+        .columns {
+            background-color: #eee;
+            cursor: pointer;
+            user-select: none;
+            width: 1200px;
+            position: sticky;
+            top: 0;
+        } 
+    </style>
+</head>
+<body>
+    
+    <div class="frame">
+        <div id="root">
+            <div class="columns item">
+                <div order="1" class="guNm">
+                    <span class="text">구이름</span>
+                    <span class="arrow"></span>
+                </div>
+                <div order="1" class="pkNam">
+                    <span class="text">주차장 이름</span>
+                    <span class="arrow"></span>
+                </div>
+                <div order="1" class="pkFm">
+                    <span class="text">이게뭐지</span>
+                    <span class="arrow"></span>
+                </div>
+                <div order="1" class="pkCnt">
+                    <span class="text">칸개수</span>
+                    <span class="arrow"></span>
+                </div>
+                <div order="1" class="tenMin">
+                    <span class="text">10분당 요금</span>
+                    <span class="arrow"></span>
+                </div>
+                <div order="1" class="ftDay">
+                    <span class="text">일일 요금</span>
+                    <span class="arrow"></span>
+                </div>
+                <div order="1" class="ftMon">
+                    <span class="text">달당 요금</span>
+                    <span class="arrow"></span>
+                </div>
+            </div>
+            <div class="main">
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="parking.js"></script>
+    <script>
+        const arr2 = arr.slice(0, 300)
+        console.log(arr2)
+
+        function load() {
+            const main = document.querySelector('div.main')
+            arr2.forEach(e => {
+                let tag = ''
+                tag += `<div class="item">`
+                tag += `    <div class="guNm">${e.guNm}</div>`
+                tag += `    <div class="pkNam">${e.pkNam}</div>`
+                tag += `    <div class="pkFm">${e.pkFm}</div>`
+                tag += `    <div class="pkCnt">${e.pkCnt == '-' ? 0 : e.pkCnt}</div>`
+                tag += `    <div class="tenMin">${e.tenMin == '-' ? 0 : e.tenMin}</div>`
+                tag += `    <div class="ftDay">${e.ftDay == '-' ? 0 : e.ftDay}</div>`
+                tag += `    <div class="ftMon">${e.ftMon == '-' ? 0 : e.ftMon}</div>`
+                tag += `</div>`
+                main.innerHTML += tag
+            })
+        }
+
+        window.addEventListener("DOMContentLoaded", load)
+
+        const columns = Array.from(document.querySelectorAll('div.columns > div'))
+        const main = document.querySelector('.main')
+
+        function sortHandler(event){
+            let target = event.target
+            while(target.tagName != 'DIV'){
+                target = target.parentNode
+            }
+            
+            // 내가 클릭한 대상은 columns에서 몇번째 인덱스를 가지는가
+            const idx = columns.indexOf(target)
+
+            const className = target.className
+            const order = +target.getAttribute('order')
+            target.setAttribute('order', -order)
+
+            document.querySelectorAll('span.arrow').forEach(span => span.innerText = '')
+            target.querySelector('span.arrow').innerText = order > 0 ? '▲' : '▼'
+
+            const arr3 = Array.from(document.querySelectorAll('div.main > div.item'))
+            arr3.sort((e1, e2) => {
+                const v1 = +e1.children[idx].innerText
+                const v2 = +e2.children[idx].innerText
+                return (v1 > v2 ? 1 : -1) * order
+            })
+            arr3.forEach(e => main.appendChild(e))
+        }
+        columns.slice(3, 7).forEach(e => e.onclick = sortHandler)
+
+    </script>
+</body>
+</html>

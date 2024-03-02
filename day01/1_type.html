@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>1_type.html</h1>
+    <hr>
+
+    <ol>
+        <li>boolean : 참/거짓</li>
+        <li>number : 숫자</li>
+        <li>string : 문자열</li>
+        <li>function : 함수</li>
+        <li>array : 배열</li>
+        <li>object : 객체</li>
+    </ol>
+
+    <script>
+        // 자료형은 변수 선언 키워드로 사용하지 않는다
+        console.log(typeof(true))
+        console.log(typeof(10))
+        console.log(typeof('Hello'))
+        console.log(typeof(function(){ alert('Spring') }))
+        console.log(typeof([10, 20, 30, 40, 50]))
+        console.log(typeof({name: '이지은', age: 31}))
+
+        const arr = [10, 20, 30, 40, 50]
+        const ob = {name: '이지은', age: 31}
+
+        console.log(arr)    // 출력시 객체 내부의 Protorype을 확인하기
+        console.log(ob)
+    </script>
+
+</body>
+</html>

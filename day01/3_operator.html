@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3_operator.html</title>
+</head>
+<body>
+
+    <script>
+        // 1) 타입이 서로 다르지만, 비교는 가능하다
+        const s1 = ''
+        const s2 = 0
+        const s3 = []
+        const s4 = '0'
+
+        console.log(s1 == s2)   // 빈문자열과 0은 같다
+        console.log(s2 == s3)   // 0과 빈 배열은 같다
+        console.log(s1 == s3)   // 빈 문자열과 빈 배열은 같다
+        console.log('=======')
+        console.log(s2 == s3)   // 0과 빈 배열은 같다
+        console.log(s2 == s4)   // 숫자 0과 문자열 '0'은 같다
+        console.log(s3 == s4)   // 빈 배열과 문자열 '0'은 다르다 (false)
+
+        // 2) 타입과 모양을 함께 체크하려면 === 을 사용한다
+        console.log(s1 === s2)  // s1.equals(s2)
+        console.log(s2 === s3)
+        console.log(s1 === s3)
+        console.log(s1 !== s3)
+        
+    </script>
+
+</body>
+</html>

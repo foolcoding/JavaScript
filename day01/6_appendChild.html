@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6_appendChild.html</title>
+</head>
+<body>
+    
+    <h1>6_appendChild</h1>
+    <hr>
+    <div id="root"></div>
+    
+    <script>
+        const root = document.getElementById('root')
+
+        // 자바스크립트에서 HTML 요소를 생성해서 문서에 반영할 수 있다
+        // 1) document 내장함수 createElement 활용
+        const e1 = document.createElement('div')
+        e1.className = 'item'
+        e1.innerText = '돈까스'
+        root.appendChild(e1)
+
+        // 2) innerHTML을 이요ㅕㅇ하여 문자열 형식으로 태그를 작성하여 추가하기
+        const food1 = '초밥'
+        const e2 = '<div class="item">food1 + 초밥</div>'
+        root.innerHTML += e2
+
+        // 3) 백틱 문자열을 이용하여 추가하기
+        // JSP에서는 EL문법과 겹치기 때문에 사용할 수 없고, .html, .js 에서 사용가능
+        const food2 = '라멘'
+        const e3 = `<div class="item">${food2}</div>`
+        root.innerHTML += e3
+
+        // appendChild는 신규 요소를 마지막에 추가한다
+        // 만약, 추가하는 요소가 이미 문서에서 불러온 요소라면 마지막으로 자리를 옮긴다
+        const item1 = document.querySelector('.item')
+        root.appendChild(item1)
+        
+        const tag = document.querySelector('.item').outerHTML
+        root.innerHTML += tag
+    </script>
+</body>
+</html>

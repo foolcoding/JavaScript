@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .frame{
+            width: 1000px;
+            margin: 20px auto;
+        }
+        #clock{
+            font-size: 25px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <div id="clock"></div>
+    </div>
+
+    <script>
+        function getTime(){
+            // const date = new Date(2024, 1, 4, 0, 0, 0)
+            const date = new Date()
+            const yyyy = date.getFullYear()
+            let MM = date.getMonth() + 1        // January: 0, Fenruary: 1, ...
+            let dd = date.getDate()
+            let day = date.getDay()     // Sun: 0, Mon: 1, Tue: 2...
+            let hh = date.getHours()
+            let mm = date.getMinutes()
+            let ss = date.getSeconds()
+            
+            MM = MM < 10 ? '0' + MM : MM
+            dd = dd < 10 ? '0' + dd : dd
+            hh = hh < 10 ? '0' + hh : hh
+            mm = mm < 10 ? '0' + mm : mm
+            ss = ss < 10 ? '0' + ss : ss
+
+            day = day == 0 ? '일' : (day == 1 ? '월' : (day == 2 ? '화' : (day == 3 ? '수' : (day == 4 ? '목' (day == 5 ? '금' (day == 6 ? '토' : 
+                        day == 7 ? '일'))))))
+
+            return `${yyyy}-${MM}-${dd} ${day} ${hh}:${mm}:${ss}`
+        }
+
+        setInterval(() => document.getElementById('clock').innerText = getTime(), 1000)
+        // setInterval(콜백함수, 주기)
+        // 주기적으로 콜백함수를 실행한다`
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .frame{
+        width: 900px;
+        margin: 0 auto;
+    }
+    #root{
+        width: 400px;
+        height: 400px;
+        border: 1px solid black;
+    }
+    .green{
+        opacity: 0.5;
+        background-color: green;
+    }
+    .red{
+        opacity: 0.5;
+        background-color: red;
+    }
+    .blue{
+        opacity: 0.5;
+        background-color: blue;
+    }
+    .pink{
+        opacity: 0.5;
+        background-color: pink;
+    }
+    .grey{
+        opacity: 0.5;
+        background-color: grey;
+    }
+    .yellow{
+        background-color: yellow;
+    }
+    .cyan{
+        background-color: cyan;
+    }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <h2>클래스 체크박스 색</h2>
+        <hr>
+        <p>
+            <label><input type="checkbox" name="green">그린</label>
+            <label><input type="checkbox" name="red">레드</label>
+            <label><input type="checkbox" name="blue">블루</label>
+            <label><input type="checkbox" name="pink">핑크</label>
+            <label><input type="checkbox" name="grey">그레이</label>
+        </p>
+        <div id="root"></div>
+    </div>
+
+    <script>
+        const root = document.getElementById('root')
+
+        const btnList = document.querySelectorAll('div.frame > p > label > input[type="checkbox"]')
+
+        // const colorHandler = function(event) { ... }
+        function colorHandler(event){
+            const checked = Array.from(btnList).filter(e => e.checked).map(e => e.name)
+            if(checked.length == 0){
+                root.className = ''
+                root.style.backgroundColor = ''
+            }
+            else{
+                if(checked.includes('green', 'red')){
+                    root.classList.add('yellow')
+                }
+                if(checked.includes('green', 'blue')){
+                    root.classList.add('cyan')
+                }
+                if(checked.includes('green', 'pink')){
+                    root.style.backgroundColor = '#7FDF65'
+                }
+                else{
+                    root.classList.add(checked)
+                }
+            }
+            console.log(checked)
+        }
+
+        btnList.forEach(e => e.onclick = colorHandler)
+    </script>
+</body> 
+</html>

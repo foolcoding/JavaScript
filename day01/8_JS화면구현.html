@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8_JS화면구현.html</title>
+    <style>
+        .frame{
+            width: 1300px;
+            margin: 20px auto;
+        }
+        #root{
+            display: flex;
+            flex-flow: wrap;
+        }
+        .item{
+            border: 2px solid black;
+            margin: 10px;
+            padding: 10px;
+            width: 210px;
+            transition-duration: 0.2s;
+            border-radius: 50px 600px 80px 70px / 70px 50px 50px 10px;
+        }
+        .item:hover{
+            transform: scale(1.06);
+            background-color: #eee;
+            cursor: pointer;
+        }
+        .item > div{
+            flex: 1;
+        }
+        .item > div:nth-child(2){
+            flex: 3;
+        }
+        .item > div:nth-child(n){
+            border-bottom: 1px solid grey;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>JSON파일 내용 불러와서 화면에 출력하기</h1>
+    <hr>
+    <div class="frame">
+        <div id="root"></div>
+    </div>
+    <script src="homeplus(berry).js"></script>
+    <script>
+        console.log(arr)
+
+        arr.sort((a, b) => b.price - a.price)
+
+        const arr2 = arr.filter((dto) => dto.name.includes('블루베리'))
+
+        const root = document.getElementById('root')
+        arr2.forEach(dto =>{
+            let tag = ''
+            tag += '<div class="item">'
+            tag += `    <div class="name"><b>제품명</b> : ${dto.name}</div>`
+            tag += `    <div class="price"><b>가격</b> : ${dto.price}</div>`
+            tag += `    <div class="salePrice"><b>판매가격</b> : ${dto.salePrice}</div>`
+            tag += `    <div class="salesCount"><b>판매횟수</b> : ${dto.salesCount}</div>`
+            tag += `    <div class="grade"><b>평점</b> : ${dto.grade}</div>`
+            tag += `    <div class="reviewCount"><b>리뷰</b> : ${dto.reviewCount}</div>`
+            tag += '</div'
+            root.innerHTML += tag
+        })
+    </script>
+</body>
+</html>

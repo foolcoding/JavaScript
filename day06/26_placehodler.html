@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root{
+            width: 500px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid black;
+            padding: 10px;
+            box-sizing: border-box;
+            justify-content: center;
+            align-items: center;
+        }
+        div.box{
+            position: relative;
+            margin: 5px;
+        }
+        label{
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            color: darkgrey;
+            font-size: 16px;
+            transition-duration: 0.3s;
+        }
+        input{
+            all: unset;
+            width: 100%;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        input:valid + label,       /* 입력요소가 기준을 충족했을 때 (required) */
+        input:focus + label{
+            top: -8px;
+            background-color: white;
+            color: red;
+            padding: 0 2px;
+            font-size: 11px;
+        }
+        input:valid + label{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>26_placeholder.html</h1>
+    <hr>
+    <div id="root">
+        <div class="box">
+            <input id="id" name="id" type="text" autocomplete="off" required>
+            <label for="">ID</label>
+        </div>
+        <div class="box">
+            <input id="pw" name="pw" type="password" required>
+            <label for="pw">Password</label>
+        </div>
+        <div class="box">
+            <button>로그인</button>
+        </div>
+    </div>
+
+</body>
+</html>

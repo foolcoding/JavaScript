@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>22_filter_vs_map.html</h1>
+    <hr>
+
+    <fieldset>
+        <h3>filter : 조건에 맞는 값만 남긴다. 길이가 변화할 수 있으나 형식은 변하지 않는다</h3>
+        <script>
+            const arr = [23, 52, 40, 11, 7]
+            const arr2 = arr.filter(num => num > 20)
+            console.log('filter')
+            console.log(arr)
+            console.log(arr2)
+            console.log('')
+        </script>
+    </fieldset>
+    <br>
+
+    <fieldset>
+        <h3>map : 기존 데이터를 활용하여 형태를 변경한다. 길이는 변하지 않는다</h3>
+        <script>
+            const arr3 = arr.map(e => e >= 20 ? '성인' : '미성년자')
+            console.log('map')
+            console.log(arr)
+            console.log(arr3)
+            console.log('')
+        </script>
+    </fieldset>
+
+
+</body>
+</html>

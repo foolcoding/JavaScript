@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18_game_result_sort.html</title>
+    <style>
+        #root {
+            border: 2px solid black;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .item {
+            display: flex;
+            border-bottom: 1px solid grey;
+        }
+        .item > div {
+            padding: 10px 20px;
+            flex: 2;
+        }
+        .item > div:first-child {
+            flex: 4;
+        }
+        .item > div:nth-child(2) {
+            flex: 3;
+        }
+        .columns {
+            background-color: #eee;
+            cursor: pointer;
+            user-select: none;
+        }
+        .item.blue {
+            background-color: skyblue;
+        }
+        .item.red {
+            background-color: lightpink;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="columns item">
+            <div order="1" class="user">
+                <span class="text">유저</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="champion">
+                <span class="text">챔피언</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="team">
+                <span class="text">팀</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="kill">
+                <span class="text">킬</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="death">
+                <span class="text">데스</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="assist">
+                <span class="text">어시스트</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="damage">
+                <span class="text">데미지</span>
+                <span class="arrow"></span>
+            </div>
+            <div order="1" class="cs">
+                <span class="text">CS</span>
+                <span class="arrow"></span>
+            </div>
+        </div>
+        <div class="main">
+            
+        </div>
+    </div>
+
+    <script src="opgg_result.js"></script>
+    <script>
+        console.log(arr)
+        function load() {
+            const main = document.querySelector('div.main')
+            arr.forEach(e => {
+                let tag = ''
+                tag += `<div class="item ${e.team == '블루' ? 'blue' : 'red'}">`
+                tag += `    <div class="user">${e.user}</div>`
+                tag += `    <div class="champion">${e.champion}</div>`
+                tag += `    <div class="team">${e.team}</div>`
+                tag += `    <div class="kill">${e.kill}</div>`
+                tag += `    <div class="death">${e.death}</div>`
+                tag += `    <div class="assist">${e.assist}</div>`
+                tag += `    <div class="damage">${e.damage}</div>`
+                tag += `    <div class="cs">${e.cs}</div>`
+                tag += `</div>`
+                main.innerHTML += tag
+            })
+        }
+        window.addEventListener('DOMContentLoaded', load)
+
+        // 컬럼 중에서 정렬의 대상이 되는 컬럼에만 클릭 이벤트를 부여한다
+        
+        const columns = document.querySelectorAll('.columns > div') // 모든 컬럼을 불러와서
+        const sort = Array.from(columns).slice(3, 8)                // 3부터 8까지만 잘라낸다
+        const main = document.querySelector('.main')                // 정렬 후 main에 내용을 넣는다
+
+        function sortHandler(event) {
+            let target = event.target           // 클릭 대상을 불러온다. div 혹은 span일수 있다
+            while(target.tagName != 'DIV') {    // 대상의 태그이름이 DIV가 아니라면 반복
+                target = target.parentNode          // 상위 요소를 대상으로 지정한다
+            }
+            const className = target.className    // 태그의 클래스이름을 문자열로 불러온다
+            const order = +target.getAttribute('order') // getAttribute('속성이름'), order값을 정수로 불러온다
+            target.setAttribute('order', -order)        // setAttribute('속성이름', 값), 부호반전시켜서 새로 저장한다
+            console.log(className, order)
+
+            // 모든 span.arrow 의 내부 글자를 지운다
+            document.querySelectorAll('span.arrow').forEach(span => span.innerText = '')
+
+            // 대상의 span.arrow 에는 order(정렬순서)에 따라서 삼각형 기호를 넣어준다
+            target.querySelector('span.arrow').innerText = order > 0 ? '▲' : '▼'
+            
+            // main의 item들을 불러와서
+            const arr2 = Array.from(document.querySelectorAll('.main > .item'))
+            arr2.sort((e1, e2) => {
+                const v1 = +e1.querySelector('.' + className).innerText // 태그 내부 값을 정수로 변환
+                const v2 = +e2.querySelector('.' + className).innerText
+                const ret = v1 - v2 >= 0 ? 1 : -1   // 정렬에 필요한 정수를 반환하기 위해 준비한다
+                return ret * order                  // 반환값의 부호가 반전되도록 1 or -1을 곱한다
+            })
+            arr2.forEach(e => main.appendChild(e))
+        }
+
+        sort.forEach(e => e.onclick = sortHandler)
+    </script>
+    
+</body>
+</html>

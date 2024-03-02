@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7_JS화면구현.html</title>
+    <style>
+        .item{
+            display: flex;
+            border: 2px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+        .item > div{
+            flex: 1;
+        }
+        .item > div:nth-child(2){
+            flex: 3;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>7_JS화면구현</h1>
+    <hr>
+    <div id="root"></div>
+
+    <script>
+        // 스프링에서 myBatis로 select를 수행한 결과를 List<DTO>로 받았다고 가정
+        const arr = [
+            {
+                idx: 1,
+                name: '새벽 겨울 딸디 500G(팩)',
+                salesPrice: 9990,
+                grade: 4.6,
+            },
+            {
+                idx: 2,
+                name: '알큰 딸기 700G(박스)',
+                salesPrice: 14990,
+                grade: 4.5,
+            },
+            {
+                idx: 3,
+                name: '살살녹는 장희 딸기 750G(팩)',
+                salesPrice: 22990,
+                grade: 4.1,
+            },
+            {
+                idx: 4,
+                name: '슈퍼푸드 블루베리(칠레) 310g(팩)',
+                salesPrice: 9900,
+                grade: 4.6,
+            },
+        ]
+        console.log(arr)
+
+        const root = document.getElementById('root')
+        arr.forEach(dto =>{
+            let tag = ''
+            tag += '<div class="item">'
+            tag += `    <div class="idx">${dto.idx}</div>`
+            tag += `    <div class="name">${dto.name}</div>`
+            tag += `    <div class="salesPrice">${dto.salesPrice}</div>`
+            tag += `    <div class="grade">${dto.grade}</div>`
+            tag += '</div'
+            root.innerHTML += tag
+        })
+    </script>
+
+</body>
+</html>

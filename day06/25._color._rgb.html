@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .frame{
+            width: 900px;
+            margin: 0 auto;
+        }
+        .box {
+            width: 100px;
+            height: 200px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <h2>RGB 체크박스 색</h2>
+        <hr>
+        <div id="root">
+            <div class="btns">
+                <input type="checkbox" id="red" name="red">레드
+                <input type="checkbox" id="orange" name="orange">오렌지
+                <input type="checkbox" id="green" name="green">그린
+                <input type="checkbox" id="blue" name="blue">블루
+                <input type="checkbox" id="purple" name="purple">퍼플
+            </div>
+            <hr>
+            <div class="box"></div>
+        </div>
+    </div>
+
+    <script>
+    const colors = {
+        red: [255, 0, 0],
+        green: [0, 255, 0],
+        blue: [0, 0, 255],
+        orange: [255, 165, 0],
+        purple: [128, 0, 128]
+    };
+
+    // 흰색
+    let currentColor = [255, 255, 255];
+
+    const checkboxes = document.querySelectorAll(".btns input[type='checkbox']");
+
+    // 각 체크박스에 대해 이벤트 리스너를 추가
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", function() {
+            if (this.checked) {
+                const colorName = this.id;
+                const color = colors[colorName];
+
+                // 현재 색상과 선택된 색상을 섞어서 새로운 색상을 만듬
+                currentColor = mixColors(currentColor, color);
+
+                // 박스의 배경색을 새로운 색상으로 설정
+                document.querySelector(".box").style.backgroundColor = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
+            }
+        });
+    });
+
+    // 두 색을 섞어 새로운 색을 반환하는 함수
+    function mixColors(color1, color2) {
+        const mixedColor = [];
+        for (let i = 0; i < 3; i++) {
+            mixedColor[i] = Math.round((color1[i] + color2[i]) / 2);
+        }
+        return mixedColor;
+    }
+
+    </script>
+</body>
+</html>

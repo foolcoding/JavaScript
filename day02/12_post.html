@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12_post.html</title>
+<style>
+    table{
+        border: 2px solid black;
+        border-collapse: collapse;
+    }
+    td, th{
+        padding: 5px 10px;
+    }
+    tr {
+        border-bottom: 1px solid grey;
+    }
+</style>
+</head>
+<body>
+    
+    <h1>12_post.html</h1>
+    <hr>
+
+    <table>
+        <tr>
+            <td class="id"></td>
+            <td class="title"></td>
+            <td class="userId"></td>
+        </tr>
+        <tr>
+            <td class="userId" colspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><pre class="body"></pre></td>
+        </tr>
+    </table>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <a href="11_posts.html"><button>목록</button></a>
+        </div>
+    </div>
+
+    <script>
+        // 자바스크립트에서 쿼리스트링 가져오기
+        const id = new URLSearchParams(location.search).get('id')
+        const url = `https://jsonplaceholder.typicode.com/posts/${id}`
+        console.log(url)
+
+        // async/await을 활용하여 json을 반환값으로 받기
+        // 비동기함수를 정의할 때 async
+        // 비동기함수를 호출할 때 await
+        async function loadHandler(){
+            const json = await fetch(url)
+                            .then(resp => resp.json())
+            console.log(json)
+
+            // json객체의 변수(필드)이름과 HTML element의 클래스 이름을 맞춰두고 하나씩 대입
+            for(let key in json){   // key는 index역할, index에 접근하려면 for...in
+                console.log(key)
+                const value = json[key]
+                const element = document.querySelector('.' + key)
+                element.innerText = value
+            }
+            const username = await fetch('https://jsonplaceholder.typicode.com/users/' + json.userId)
+                                    .then(resp => resp.json())
+                                    .then(json => json.username)
+
+            document.querySelector('.userId').innerText = username
+        }
+       window.onload = loadHandler
+    </script>
+
+</body>
+</html>

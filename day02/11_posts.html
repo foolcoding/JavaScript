@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11_posts.html</title>
+    <style>
+        a{
+            color: inherit;
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+        table{
+            border-collapse: collapse;
+            margin: auto;
+        }
+        thead{
+            background-color: grey;
+            color: white;
+        }
+        tr {
+            border-bottom: 1px solid grey;
+        }
+        td, th{
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>11_posts.html</h1>
+    <hr>
+
+    <div id="root">
+        <table>
+            <thead>
+                <tr>번호</tr>
+                <tr>제목</tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    
+    <script>
+        const url = 'https://jsonplaceholder.typicode.com/posts'
+        
+        fetch(url)
+            .then(resp => resp.json())
+            .then(json =>{
+                const table = document.querySelector('#root > table')
+                const arr = json.toSorted((a, b) => b.id - a.id)    // 정수 반환
+                                    //.slice(0, 20)                   // 페이징
+                arr.forEach(dto =>{
+                    let tag = ''
+                    tag += '<tr>'
+                    tag += `    <td>${dto.id}</td>`
+                    tag += `    <td><a href="12_post.html?id=${dto.id}">${dto.title}</a></td>`
+                    tag += '</tr>'
+                    table.innerHTML += tag
+                })
+            })
+    </script>
+    
+</body>
+</html>

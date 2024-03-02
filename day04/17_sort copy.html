@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17_sort.html</title>
+    <style>
+        #root, .columns{
+            max-width: 1400px;
+            margin: auto;
+        }
+        body > p{
+            max-width: 1400px;
+            margin: 20px auto;
+        }
+
+        .columns{
+            background-color: #eee;
+        }
+        .item{
+            display: flex;
+        }
+        .item > div{
+            border: 1px solid black;
+            flex: 1;
+            padding: 5px 10px;
+        }
+        .item > div:nth-child(1){
+            flex: 4;
+        }
+    </style>
+</head>
+<body>
+        <h1>JSON파일 내용 불러와서 화면에 정렬 출력하기</h1>
+        <hr>
+
+        <p id="sort">
+            <button id="price-asc">가격 낮은 순</button>
+            <button id="price-desc">가격 높은 순</button>
+            <button id="grade-desc">평점 높은 순</button>
+            <button id="reviewCount-desc">리뷰 많은 순</button>
+        </p>
+        
+        <div class="columns item">
+            <div>상품이름</div>
+            <div>가격</div>
+            <div>평점</div>
+            <div>리뷰수</div>
+            <div>판매량</div>
+        </div>
+        <div id="root"></div>
+
+    <script src="homeplus(berry).js"></script>
+    <script>
+        const root = document.getElementById('root')
+        console.log(arr)
+        // 페이지가 열렸을 때 초기 작동을 생각하면서
+        // 각 기능을 함수 단위로 분리
+        
+        // 정렬 함수
+        // - 정렬은 배열의 서로 다른 두 요소를 비교할 때 결과가 어떻게 정수로 나타는지 알려주기
+        // - element.innerText 는 항상 문자열이므로, 숫자형태로 비교하려면 + 붙여주기
+        // - 컬럼과, 정렬순서만 다른 4개의 버튼에 대해 따로 함수를 만들것인가?
+        // - 컬럼과 순서를 전달받아서, 하나의 함수로 전환할 수 있도록 통합할 것인가
+        function sort(event){
+            const id = event.target.id          // element.id 는 태그의 id 문자열이다
+            const column = id.split('-')[0]     
+            const order = id.split('-')[1]      
+            console.log(column, order)
+            // 정렬을 수행하고, 정렬된 내용을 다시 root에 appendChild 하면
+            // 순서변경만 진행되고 새로운 요소가 추가되거나 삭제되지는 않는다
+            const arr2 = Array.from(document.querySelectorAll('#root > .item'))
+            arr2.sort((e1, e2) => {
+                const v1 = +e1.querySelector('.' + column).innerText
+                const v2 = +e2.querySelector('.' + column).innerText
+                
+                return v1 - v2 > 0 ? 1 : -1
+            })
+            if(order == 'desc') {
+                arr2.reverse()
+            }
+            arr2.forEach(e => root.appendChild(e))
+        }
+        const btnList = document.querySelectorAll('#sort > button')
+        btnList.forEach(btn => btn.onclick = sort)
+
+        // JSON데이터를 화면에 반영하는 함수
+        function load(){
+            arr.forEach(dto =>{
+                let tag = ''
+                tag += '<div class="item">'
+                tag += `    <div class="name">${dto.name}</div>`
+                tag += `    <div class="price">${dto.price}</div>`
+                // tag += `    <div class="salePrice"> ${dto.salePrice}</div>`
+                tag += `    <div class="grade">${dto.grade}</div>`
+                tag += `    <div class="reviewCount">${dto.reviewCount}</div>`
+                tag += `    <div class="salesCount">${dto.salesCount}</div>`
+                tag += '</div>'
+                root.innerHTML += tag
+            })
+        }
+
+        // 1) 명시적으로 직접 호출
+        // load()
+
+        // 2) window.onload
+        // 창뜨면 바로 로드함
+        // window.onload = load
+
+        // 3) window.addEventListener('DOMContentLoaded', load)
+        // 창뜨고 내용뜨고 로드함
+        window.addEventListener('DOMContentLoaded', load)
+        // AJAX에서 fetch쓰면 꼬일수있어서 3번이 제일 안전하다는 평가
+
+
+    </script>
+</body>
+</html>

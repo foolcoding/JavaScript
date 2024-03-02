@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root{
+            display: flex;
+            width: 500px;
+            height: 350px;
+        }
+        .left{
+            display: flex;
+            flex-direction: column;
+            width: 100px;
+        }
+        .left > label{
+            flex: 1;
+        }
+        table{
+            border-collapse: collapse;
+            border: 2px solid black;
+        }
+        td {
+            border: 1px solid grey;
+            padding: 10px 20px;
+        }
+        .hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>21_다중조건필터.html</h1>
+    <hr>
+
+    <div id="root">
+        <div class="left">
+            <label><input type="checkbox" name="a10">10대</label>
+            <label><input type="checkbox" name="a20">20대</label>
+            <label><input type="checkbox" name="a30">30대</label>
+            <label><input type="checkbox" name="a40">40대</label>
+            <label><input type="checkbox" name="a50">50대</label>
+        </div>
+        <div class="right">
+            <table>
+                <tr>
+                    <td>남도일</td>
+                    <td>17</td>
+                </tr>
+                <tr>
+                    <td>최현웅</td>
+                    <td>27</td>
+                </tr>
+                <tr>
+                    <td>이지은</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>홍진호</td>
+                    <td>42</td>
+                </tr>
+                <tr>
+                    <td>이서진</td>
+                    <td>53</td>
+                </tr>
+                <tr>
+                    <td>10대</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>김민정</td>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <td>유지민</td>
+                    <td>23</td>
+                </tr>
+                <tr>
+                    <td>오예랑</td>
+                    <td>26</td>
+                </tr>
+                <tr>
+                    <td>아이네</td>
+                    <td>30</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const boxList = document.querySelectorAll('div.left > label > input[type="checkbox"]')
+        
+        function filterHandler(event){
+            // 배열에서 원하는 속성만 가져오거나, 별도의 속성을 추가해서 가져올때 Array.map() 사용
+            const checkedArray = Array.from(boxList).filter(e => e.checked)
+                                    .map(e => +e.name.replace('a', ''))
+            console.log(checkedArray)
+            
+            const trList = document.querySelectorAll('table > tbody > tr')
+            trList.forEach(tr =>{
+                const age = Math.floor(+tr.children[1].innerText / 10) * 10
+                if(checkedArray.includes(age)){
+                    tr.classList.remove('hidden')
+                }
+                else{
+                    tr.classList.add('hidden')
+                }
+            })
+        }
+
+        boxList.forEach(box => box.onclick = filterHandler)
+    </script>
+
+</body>
+</html>

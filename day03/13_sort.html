@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13_sort.html</title>
+    <style>
+        .frame{
+            width: 900px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <ul id="ul" class="test1">
+
+        </ul>
+    </div>
+    <script>
+        const arr = [4, 8, 2, 7, 6, 1, 10]
+        console.log(arr)
+        const arr2 = arr.toSorted((a, b) => a - b)
+
+        let ul = document.getElementById('ul')
+        arr2.forEach(num =>{
+                    let tag = `<li>${num}</li>`
+                    ul.innerHTML += tag
+                })
+                
+        const test1 = document.querySelector('ul.test1')
+        arr2.forEach((num) => { test1.innerHTML += '<li>' + num + '</li>'})
+        console.log(arr2)
+    </script>
+    
+</body>
+</html>
